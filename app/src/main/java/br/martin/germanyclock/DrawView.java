@@ -1,20 +1,15 @@
 package br.martin.germanyclock;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.shapes.ArcShape;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
-import static android.R.attr.rotation;
 
 /**
  * @author impaler
@@ -26,7 +21,11 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     private static final String TAG = DrawView.class.getSimpleName();
 
     private MainThread thread;
-
+    Paint paint;
+    Paint paintHour;
+    Paint paintMinutos;
+    Rect ponteiroMinutos;
+    Rect ponteiroHoras;
     private int horaPonteiro;
     private int minutoPonteiro;
 
@@ -34,12 +33,19 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     public DrawView(Context context,AttributeSet attr) {
         super(context,attr);
 
+        paint = new Paint();
+        paintHour = new Paint();
+        paintMinutos = new Paint();
+        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2+200 , getWidth()/2+20, getHeight()/2);
+        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2+150 , getWidth()/2+20, getHeight()/2);
+
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
 
         // create droid and load bitmap
         // create the game loop thread
         thread = new MainThread(getHolder(), this);
+
 
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
@@ -91,25 +97,22 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         // fills the canvas with black
         canvas.drawColor(Color.WHITE);
 
-        Paint paint = new Paint();
-        Paint paintRect = new Paint();
-        Rect ponteiroMinutos = new Rect(getWidth()/2-20, 100 , getWidth()/2+20, getHeight()/2);
-        Rect ponteiroHoras = new Rect(getWidth()/2-20, 200 , getWidth()/2+20, getHeight()/2);
 
         paint.setARGB(100, 128, 128 ,100);
-        paintRect.setARGB(100, 0, 128 ,100);
+        paintHour.setARGB(200, 20, 132 ,3);
+        paintMinutos.setARGB(200,45,74,231);
 
 
         //Ponteiro dos minutos
         canvas.save();
         canvas.rotate(6*minutoPonteiro,ponteiroMinutos.centerX(),ponteiroMinutos.bottom);
-        canvas.drawRect(ponteiroMinutos, paintRect);
+        canvas.drawRect(ponteiroMinutos, paintMinutos);
         canvas.restore();
 
         //Ponteiro das horas
         canvas.save();
         canvas.rotate(30*horaPonteiro,ponteiroHoras.centerX(),ponteiroHoras.bottom);
-        canvas.drawRect(ponteiroHoras, paintRect);
+        canvas.drawRect(ponteiroHoras, paintHour);
         canvas.restore();
 
         //radio = 350
