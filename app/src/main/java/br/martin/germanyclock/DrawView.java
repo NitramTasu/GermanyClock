@@ -36,8 +36,7 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         paint = new Paint();
         paintHour = new Paint();
         paintMinutos = new Paint();
-        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2+200 , getWidth()/2+20, getHeight()/2);
-        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2+150 , getWidth()/2+20, getHeight()/2);
+
 
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
@@ -97,10 +96,14 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         // fills the canvas with black
         canvas.drawColor(Color.WHITE);
 
+        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2+200 , getWidth()/2+20, getHeight()/2);
+        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2+150 , getWidth()/2+20, getHeight()/2);
+
 
         paint.setARGB(100, 128, 128 ,100);
         paintHour.setARGB(200, 20, 132 ,3);
         paintMinutos.setARGB(200,45,74,231);
+
 
 
         //Ponteiro dos minutos
