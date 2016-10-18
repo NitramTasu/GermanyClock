@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="numbers">
+        <item>eins</item>
+        <item>zwei</item>
+        <item>drei</item>
+        <item>vier</item>
+        <item>fünf</item>
+        <item>sechs</item>
+        <item>seben</item>
+        <item>acht</item>
+        <item>neuen</item>
+        <item>zehn</item>
+        <item>elf</item>
+        <item>zwölf</item>
+    </string-array>
+    <string-array name="dezenas">
+        <item>zehn</item>
+        <item>zwanzig</item>
+        <item>dreizig</item>
+        <item>vierzig</item>
+        <item>fünfzig </item>
+    </string-array>
+    <string name="after_world">vor</string>
+    <string name="before_word">nach</string>
+    <string name="min_15">viertel</string>
+    <string name="is_hour">Es ist</string>
+    <string name="hour">Uhr</string>
+    <string name="most">kurz</string>
+    <string name="and">und</string>
+    <string name="what_time_is_it">Wie spät ist es?</string>
+
+
+
+
+
+</resources>
