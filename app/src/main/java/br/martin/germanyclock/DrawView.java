@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,11 +22,22 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     private static final String TAG = DrawView.class.getSimpleName();
 
     private MainThread thread;
-    Paint paint;
+    Paint paintRelogioCor;
     Paint paintHour;
     Paint paintMinutos;
     Rect ponteiroMinutos;
     Rect ponteiroHoras;
+
+    RectF primeiroQuadrante;
+    Paint quadranteCor;
+
+    int raio;
+
+    int r = 740;
+    int l;
+    int t;
+    int b=750;
+
     private int horaPonteiro;
     private int minutoPonteiro;
 
@@ -33,9 +45,12 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     public DrawView(Context context,AttributeSet attr) {
         super(context,attr);
 
-        paint = new Paint();
+        paintRelogioCor = new Paint();
         paintHour = new Paint();
         paintMinutos = new Paint();
+        raio = 250;
+
+        quadranteCor = new Paint();
 
 
         // adding the callback (this) to the surface holder to intercept events
@@ -85,26 +100,39 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
-
         }
+        r-=1;
         //movePonteiroHora++;
+        //Log.i("Arc", "valor: "+r);
+        //Log.i("Arc", "valor: "+primeiroQuadrante.centerX());
         return true;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         // fills the canvas with black
+
         canvas.drawColor(Color.WHITE);
 
-        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2+200 , getWidth()/2+20, getHeight()/2);
-        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2+150 , getWidth()/2+20, getHeight()/2);
-
-
-        paint.setARGB(100, 128, 128 ,100);
+        quadranteCor.setARGB(255,216,2,45 );
+        paintRelogioCor.setARGB(255, 183, 179 ,179);
         paintHour.setARGB(200, 20, 132 ,3);
         paintMinutos.setARGB(200,45,74,231);
 
+        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2+200 , getWidth()/2+20, getHeight()/2);
+        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2+150 , getWidth()/2+20, getHeight()/2);
+        primeiroQuadrante = new RectF(raio-25, getHeight()/2-250-25, getWidth()/2+raio, getHeight()/2+250);
 
+
+        canvas.drawArc (primeiroQuadrante, 180, 90, true, quadranteCor);
+        canvas.drawCircle(getWidth()/2,getHeight()/2,raio, paintRelogioCor);
+
+        //primeiroQuadrante = new RectF(242, 178, 740, 693);
+
+        //0,-90
+        //0,90
+        //90,90
+        //180,90
 
         //Ponteiro dos minutos
         canvas.save();
@@ -118,8 +146,10 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         canvas.drawRect(ponteiroHoras, paintHour);
         canvas.restore();
 
+
+
+
         //radio = 350
-        canvas.drawCircle(getWidth()/2,getHeight()/2,250,paint);
 
     }
 
