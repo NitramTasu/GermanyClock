@@ -31,12 +31,18 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     RectF primeiroQuadrante;
     Paint quadranteCor;
 
-    int raio;
+
+    float scale;
+
+    int raioRelogio;
 
     int r = 740;
     int l;
     int t;
     int b=750;
+
+    int xRelogio;
+    int yRelogio;
 
     private int horaPonteiro;
     private int minutoPonteiro;
@@ -45,12 +51,20 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     public DrawView(Context context,AttributeSet attr) {
         super(context,attr);
 
+
+
+
         paintRelogioCor = new Paint();
         paintHour = new Paint();
         paintMinutos = new Paint();
-        raio = 250;
+        raioRelogio = 250;
 
         quadranteCor = new Paint();
+
+        ponteiroHoras = new Rect();
+        ponteiroMinutos = new Rect();
+        primeiroQuadrante = new RectF();
+
 
 
         // adding the callback (this) to the surface holder to intercept events
@@ -111,6 +125,8 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
     @Override
     protected void onDraw(Canvas canvas) {
         // fills the canvas with black
+        xRelogio = getWidth()/2;
+        yRelogio = getHeight()/2;
 
         canvas.drawColor(Color.WHITE);
 
@@ -119,13 +135,15 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         paintHour.setARGB(200, 20, 132 ,3);
         paintMinutos.setARGB(200,45,74,231);
 
-        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2-200 , getWidth()/2+20, getHeight()/2);
-        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2-150 , getWidth()/2+20, getHeight()/2);
+        //ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2-200 , getWidth()/2+20, getHeight()/2);
+        //ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2-150 , getWidth()/2+20, getHeight()/2);
+
+        ponteiroMinutos.set(xRelogio-20, yRelogio-200, xRelogio+20, yRelogio);
+        ponteiroHoras.set(xRelogio-20, yRelogio-150, xRelogio+20, yRelogio);
 
 
-
-        desenharQuadrante(canvas,minutoPonteiro, primeiroQuadrante, quadranteCor);
-        canvas.drawCircle(getWidth()/2,getHeight()/2,raio, paintRelogioCor);
+        desenharQuadrante(canvas,minutoPonteiro, quadranteCor);
+        canvas.drawCircle(xRelogio,yRelogio, raioRelogio, paintRelogioCor);
         //primeiroQuadrante = new RectF(242, 178, 740, 693);
 
         //0,-90
@@ -152,8 +170,16 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
 
     }
 
-    private void desenharQuadrante(Canvas canvas,int minutos,  RectF primeiroQuadrante, Paint quadranteCor) {
-        primeiroQuadrante = new RectF(raio-25, getHeight()/2-250-25, getWidth()/2+raio+25, getHeight()/2+250+25);
+    private void desenharQuadrante(Canvas canvas,int minutos, Paint quadranteCor) {
+
+        //primeiroQuadrante.set(raioRelogio-25, getHeight()/2-250-25, getWidth()/2+raioRelogio+25, getHeight()/2+250+25);
+        float tamanhoQuadrante = raioRelogio * 2.3f;
+        float xQuadrante = xRelogio - tamanhoQuadrante/2;
+        float yQuadrante = yRelogio - tamanhoQuadrante/2;
+
+        primeiroQuadrante.set(xQuadrante, yQuadrante, xQuadrante+tamanhoQuadrante, yQuadrante+tamanhoQuadrante);
+
+
         //1ºquadrante 0,-90
         //2ºquadrante 0,90
         //3ºquadrante 90,90
@@ -176,12 +202,16 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         }
 
         canvas.drawArc (primeiroQuadrante, anguloInicial, anguloFinal, true, quadranteCor);
-        //canvas.drawArc (primeiroQuadrante, 180, 90, true, quadranteCor);
+
     }
 
     public void setHour(int hora, int minuto){
         this.horaPonteiro = hora;
         this.minutoPonteiro = minuto;
+    }
+
+    public void setScale(float scale){
+        this.scale = scale;
     }
 
 }
