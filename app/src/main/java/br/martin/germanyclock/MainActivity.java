@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     //TextView antes_depoisTV;
     String[] numberArrayString;
     String[] dezenasArrayString;
+    long startSelection = 0;
+    long endSelection = 0;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -51,20 +53,29 @@ public class MainActivity extends AppCompatActivity {
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, final int i, final int i1) {
+                startSelection = System.currentTimeMillis();
 
-                Log.d(TAG, "Valor: " + i +":"+i1);
-                surface.setTime(i,i1);
-                Uhr uhr = getGermanize(i,i1, MainActivity.this);
-                hoursTV.setText(uhr.getHour());
-                minutesTV.setText(uhr.getMinute());
-                //frase.setText(getGermanize(i,i1, MainActivity.this));
-                //frase.setText(getGermanize(19,26, MainActivity.this));
+                if(needWait(startSelection, endSelection)){
+                    Log.d(TAG, "Valor: " + i +":"+i1);
+                    surface.setTime(i,i1);
+                    Uhr uhr = getGermanize(i,i1, MainActivity.this);
+                    hoursTV.setText(uhr.getHour());
+                    minutesTV.setText(uhr.getMinute());
+                    //frase.setText(getGermanize(i,i1, MainActivity.this));
+                    //frase.setText(getGermanize(19,26, MainActivity.this));
+                }
+                endSelection = System.currentTimeMillis();
+
 
 
             }
         });
 
         Log.d(TAG, "View added");
+    }
+
+    private boolean needWait(long startSelection, long endSelection) {
+        return startSelection-endSelection > 20;
     }
 
     private void configCurrentTime(DrawView surface) {
@@ -128,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //hourString = getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour) + " " + minuteTxt;
-                uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(R.string.hour) + " ");
+                uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(hour) + " ");
                 uhr.setMinute(minuteTxt);
                 //hoursTV.setText(getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour) + " ");
                 //minutesTV.setText(minuteTxt);
@@ -136,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }else{
             //hourString = getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour);
-            uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(R.string.hour) + " ");
+            uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(hour) + " ");
             //hoursTV.setText(getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour));
         }
 
@@ -154,9 +165,9 @@ public class MainActivity extends AppCompatActivity {
             hourString = hourString + " " + "vor";
             //antes_depoisTV.setText("vor ");
 
-        }else{
+        }//else{
             //antes_depoisTV.setText("");
-        }
+        //}
 
         if(minute > 15 && minute <= 45){
             hourString = hourString + " " + "halb ";
