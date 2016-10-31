@@ -119,14 +119,13 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         paintHour.setARGB(200, 20, 132 ,3);
         paintMinutos.setARGB(200,45,74,231);
 
-        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2+200 , getWidth()/2+20, getHeight()/2);
-        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2+150 , getWidth()/2+20, getHeight()/2);
-        primeiroQuadrante = new RectF(raio-25, getHeight()/2-250-25, getWidth()/2+raio, getHeight()/2+250);
+        ponteiroMinutos = new Rect(getWidth()/2-20, getHeight()/2-200 , getWidth()/2+20, getHeight()/2);
+        ponteiroHoras = new Rect(getWidth()/2-20, getHeight()/2-150 , getWidth()/2+20, getHeight()/2);
 
 
-        canvas.drawArc (primeiroQuadrante, 180, 90, true, quadranteCor);
+
+        desenharQuadrante(canvas,minutoPonteiro, primeiroQuadrante, quadranteCor);
         canvas.drawCircle(getWidth()/2,getHeight()/2,raio, paintRelogioCor);
-
         //primeiroQuadrante = new RectF(242, 178, 740, 693);
 
         //0,-90
@@ -151,6 +150,33 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
 
         //radio = 350
 
+    }
+
+    private void desenharQuadrante(Canvas canvas,int minutos,  RectF primeiroQuadrante, Paint quadranteCor) {
+        primeiroQuadrante = new RectF(raio-25, getHeight()/2-250-25, getWidth()/2+raio+25, getHeight()/2+250+25);
+        //1ºquadrante 0,-90
+        //2ºquadrante 0,90
+        //3ºquadrante 90,90
+        //4ºquadrante 180,90
+        int anguloInicial = 0;
+        int anguloFinal = 0;
+
+        if(minutos>=0 && minutos <=15){
+            anguloInicial = 0;
+            anguloFinal = -90;
+        }else if(minutos > 15 && minutos <=30){
+            anguloInicial = 0;
+            anguloFinal = 90;
+        }else if(minutos > 30 && minutos <=45){
+            anguloInicial = 90;
+            anguloFinal = 90;
+        }else if(minutos>45 && minutos <=60){
+            anguloInicial = 180;
+            anguloFinal = 90;
+        }
+
+        canvas.drawArc (primeiroQuadrante, anguloInicial, anguloFinal, true, quadranteCor);
+        //canvas.drawArc (primeiroQuadrante, 180, 90, true, quadranteCor);
     }
 
     public void setHour(int hora, int minuto){
