@@ -2,10 +2,13 @@ package br.martin.germanyclock;
 
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -20,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     TextView minutesTV;
     String[] numberArrayString;
     String[] dezenasArrayString;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+            public void onTimeChanged(TimePicker timePicker, final int i, final int i1) {
+
                 Log.d(TAG, "Valor: " + i +":"+i1);
                 surface.setHour(i,i1);
                 Uhr uhr = getGermanize(i,i1, MainActivity.this);
@@ -47,9 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 minutesTV.setText(uhr.getMinute());
                 //frase.setText(getGermanize(i,i1, MainActivity.this));
                 //frase.setText(getGermanize(19,26, MainActivity.this));
+
+
             }
         });
-
 
         Log.d(TAG, "View added");
     }
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         //String hourString = "";
         Uhr uhr = new Uhr();
 
-        //minute =  45;
+        //minute =  11;
         //hour = 23;
 
         //Log.i("teste", ""+hour);
@@ -96,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 //hour--;
                 String minuteTxt = "";
-                if(minute > 0 && minute <=10){
+                if(minute > 0 && minute <=12){
                     minuteTxt =  numberArrayString[minute-1];
-                }else if(minute > 11 && minute <= 19){
+                }else if(minute > 12 && minute <= 19){
                     minuteTxt =  getTeen(minute);
                 }else if(minute >=20){
                     minuteTxt = getDezena(minute);
@@ -152,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             hourString = hourString +" "+getTeen(hour);
         }else if(hour > 19 && hour <= 23){
             hourString = hourString +" "+getDezena(hour);
-        }else if (hour == 0){
+        }else if (hour == 0 || hour == 24 ){
             hourString = hourString +" "+"Mitternacht";
         }
         return hourString;
