@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //hourString = getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour) + " " + minuteTxt;
-                uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(hour) + " ");
+                uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(R.string.hour) + " ");
                 uhr.setMinute(minuteTxt);
                 //hoursTV.setText(getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour) + " ");
                 //minutesTV.setText(minuteTxt);
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }else{
             //hourString = getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour);
-            uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(hour) + " ");
+            uhr.setHour(getHourExpression(hour,numberArrayString,uhr.getHour()) +" "+ context.getResources().getString(R.string.hour) + " ");
             //hoursTV.setText(getHourExpression(hour,numberArrayString,hourString) +" "+ context.getResources().getString(R.string.hour));
         }
 
