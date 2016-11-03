@@ -1,7 +1,6 @@
 package br.martin.germanyclock;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -68,10 +67,6 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
 
-        // create droid and load bitmap
-        // create the game loop thread
-        thread = new MainThread(getHolder(), this);
-
 
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
@@ -84,6 +79,7 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        thread = new MainThread(getHolder(), this);
         // at this point the surface is created and
         // we can safely start the game loop
         thread.setRunning(true);
@@ -101,9 +97,10 @@ public  class DrawView extends SurfaceView implements SurfaceHolder.Callback  {
         while (retry) {
             try {
                 thread.join();
+                thread = null;
                 retry = false;
             } catch (InterruptedException e) {
-                // try again shutting down the thread
+                Log.e("ErroThread",e.getMessage());
             }
         }
         Log.d(TAG, "Thread was shut down cleanly");
