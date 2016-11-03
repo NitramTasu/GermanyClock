@@ -24,18 +24,6 @@
 
     </android.support.v7.widget.CardView>
 
-    <TimePicker
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:timePickerMode="spinner"
-        android:id="@+id/chooseTime"
-        android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginTop="19dp"
-        android:layout_below="@+id/card1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,25 +32,70 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/hoursTV"
-        android:text="horas"
-        android:textColor="@color/colorHours"
-        android:layout_below="@+id/descricao"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/card2"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/card1"
+        android:weightSum="2">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/minutesTV"
-        android:text="minutos"
-        android:textColor="@color/colorMinutes"
-        android:layout_below="@+id/descricao"
-        android:layout_toEndOf="@+id/hoursTV"
-        android:layout_toRightOf="@+id/hoursTV" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hoursTV"
+                android:text="horas"
+                android:textColor="@color/colorHours"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:layout_weight="1"
+                />
+
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/antes_depoisTV"
+                android:text="antes_depois"
+                android:textColor="@color/redQuadrant"
+                android:layout_below="@+id/descricao"
+                android:layout_toEndOf="@+id/hoursTV"
+                android:layout_toRightOf="@+id/hoursTV" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/minutesTV"
+                android:text="minutos"
+                android:textColor="@color/colorMinutes"
+                android:layout_toEndOf="@+id/hoursTV"
+                android:layout_toRightOf="@+id/hoursTV"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <TimePicker
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/chooseTime"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/card2"
+        android:layout_centerHorizontal="true"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:touchscreenBlocksFocus="false"
+        android:longClickable="false"
+        android:timePickerMode="spinner" />
 
 
 </RelativeLayout >

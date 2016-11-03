@@ -6,8 +6,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -208,5 +215,57 @@ public class MainActivity extends AppCompatActivity {
     }
     public String getTeen(int number){
         return numberArrayString[(number-1)%10]+""+dezenasArrayString[0];
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_app, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.about_menuitem){
+
+
+            createAlertDialog();
+
+        }
+        return true;
+    }
+
+    private void createAlertDialog() {
+
+        //Cria um view
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        final TextView urlTV = new TextView(this);
+        final TextView message =  new TextView (this);
+
+        urlTV.setPadding(20,20,0,0);
+        message.setPadding(30, 20, 0, 0);
+
+        //Cria um SpannableString para manipular o texto
+        final SpannableString s = new SpannableString(" github.com/NitramTasu/GermanyClock");
+
+        //Define que o texto é um link
+        Linkify.addLinks(s, Linkify.WEB_URLS);
+        urlTV.setText(s);
+        urlTV.setMovementMethod(LinkMovementMethod.getInstance());
+
+        message.setText(getResources().getString(R.string.created));
+
+        linearLayout.addView(message);
+        linearLayout.addView(urlTV);
+
+        AlertDialog.Builder alertDialog =  new AlertDialog.Builder(this);
+        //alertDialog.setMessage(getResources().getString(R.string.created)).setTitle(getResources().getString(R.string.created_title));
+        AlertDialog dialog = alertDialog
+                            .setPositiveButton("Ok", null)
+                            .setView(linearLayout)
+                            .setTitle("About")
+                            .create();
+
+        dialog.show();
     }
 }

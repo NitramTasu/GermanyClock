@@ -2,7 +2,10 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#03a44e</color>
     <color name="colorHours">#148403</color>
     <color name="colorMinutes">#2d4ae7</color>
+    <color name="grayClock">#b7b2b2</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="redQuadrant">#d80606</color>
 </resources>
